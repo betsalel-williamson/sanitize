@@ -1,0 +1,54 @@
+version '1.0-SNAPSHOT'
+
+buildscript {
+    ext.kotlin_version = '1.0.5-2'
+
+//    ext.junit_platform_gradle_plugin_version = '1.0.0-M1'
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0-M2'
+    }
+}
+
+apply plugin: 'maven'
+apply plugin: 'application'
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'kotlin'
+apply plugin: 'org.junit.platform.gradle.plugin'
+
+mainClassName = "Main"
+
+junitPlatform {
+//    platformVersion 1.0
+//    logManager 'org.apache.logging.log4j.jul.LogManager'
+//    reportsDir "build/test-results/junit-platform" // this is the default
+    // enableStandardTestTask true
+    engines {
+        include 'spek'
+        // exclude 'junit-vintage'
+    }
+}
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.apache.commons:commons-lang3:3.5"
+
+    testCompile 'junit:junit:4.12'
+
+    testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+
+    testCompile 'org.jetbrains.spek:spek-api:1.0.89'
+    testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:1.0.89'
+}
